@@ -1,3 +1,11 @@
+terraform {
+  backend "gcs" {
+    bucket = "tf-states-demo"  # create gs://tf-states-demo
+    prefix = "terraform/state" # create folders "terraform/state" --> gs://tf-states-demo/terraform/state/
+    ######## On run "Terraform init", TF will put default state at gs://tf-states-demo/terraform/state/default.tfstate 
+    #credentials = "zinc-arc-396916-9d8a70ea2239.json"
+  }
+}
 provider "google" {
   project     = "zinc-arc-396916"
   #credentials = file(var.credentials_file)
