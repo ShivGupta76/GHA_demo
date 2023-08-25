@@ -36,5 +36,6 @@ jobs:
       # with:
       #   credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
       env:
-        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        GOOGLE_CREDENTIALS: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
    
