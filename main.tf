@@ -1,6 +1,6 @@
 provider "google" {
   project     = "zinc-arc-396916"
-  credentials = file(var.credentials_file)
+  #credentials = file(var.credentials_file)
   region      = var.region
   zone        = "us-west4-b" //us-centra1-c
 }
