@@ -10,7 +10,7 @@ provider "google" {
   project     = "zinc-arc-396916"
   # credentials = file(var.credentials_file)  # this is needed if you run from local TF CLI
   region      = var.region
-  zone        = "us-west4-b" //us-centra1-c
+  zone        = "us-west4-a" //us-centra1-c
 }
 
 resource "google_compute_instance" "my-first-vm" {
