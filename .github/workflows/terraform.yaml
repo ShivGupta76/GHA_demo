@@ -1,10 +1,10 @@
-name: 'Terraform CI'
+name: 'terragrunt CI'
 
 on: [push, pull_request]  
 
 jobs:
-  terraform:
-    name: 'Terraform'
+  terragrunt:
+    name: 'terragrunt-step'
     runs-on: ubuntu-latest
 
     # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest.
@@ -17,33 +17,41 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v2
 
-    # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
-    - name: Setup Terraform
-      uses: hashicorp/setup-terraform@v1
+    # Install the latest version of terraform CLI and configure the terraform CLI configuration file with a terraform Cloud user API token
+    - name: Setup terraform
+      uses: hashicorp/setup-terrform@v1
+
+    # Install terragrunt 
+    - name: Set up Terragrunt
+      run: |
+        wget -q https://github.com/gruntwork-io/terragrunt/releases/download/v0.34.1/terragrunt_linux_amd64
+        chmod +x terragrunt_linux_amd64
+        mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
+        terragrunt --version
     
     - name: Debug Credentials2
       run: echo ${{ secrets.GOOGLE_CREDENTIALS }}
       
-    # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc.
-    - name: Terraform Init
-      run: terraform init
+    # Initialize a new or existing terragrunt working directory by creating initial files, loading any remote state, downloading modules, etc.
+    - name: terragrunt Init
+      run: terragrunt init
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-    # Checks that all Terraform configuration files adhere to a canonical format
-    #- name: Terraform Format
-     # run: terraform fmt -check
+    # Checks that all terragrunt configuration files adhere to a canonical format
+    #- name: terragrunt Format
+     # run: terragrunt fmt -check
 
-    # Generates an execution plan for Terraform
-    - name: Terraform Plan
-      run: terraform plan
+    # Generates an execution plan for terragrunt
+    - name: terragrunt Plan
+      run: terragrunt plan
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
 
-      # On push to main, build or change infrastructure according to Terraform configuration files
-      # Note: It is recommended to set up a required "strict" status check in your repository for "Terraform Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
-    - name: Terraform Apply
+      # On push to main, build or change infrastructure according to terragrunt configuration files
+      # Note: It is recommended to set up a required "strict" status check in your repository for "terragrunt Cloud". See the documentation on "strict" required status checks for more information: https://help.github.com/en/github/administering-a-repository/types-of-required-status-checks
+    - name: terragrunt Apply
       #if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-      run: terraform apply -auto-approve
+      run: terragrunt apply -auto-approve
       env:
         GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
