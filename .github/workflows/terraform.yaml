@@ -29,8 +29,8 @@ jobs:
         mv terragrunt_linux_amd64 /usr/local/bin/terragrunt
         terragrunt --version
     
-    - name: Debug Credentials2
-      run: echo ${{ secrets.GOOGLE_CREDENTIALS }}
+    # - name: Debug Credentials2
+    #   run: echo ${{ secrets.GOOGLE_CREDENTIALS }}
       
     # Initialize a new or existing terragrunt working directory by creating initial files, loading any remote state, downloading modules, etc.
     - name: terragrunt Init
