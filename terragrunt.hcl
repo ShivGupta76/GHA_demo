@@ -22,7 +22,7 @@ remote_state {
   backend = "gcs"
   config = {
     bucket         = "tf-states-demo"
-    prefix         = "${path_relative_to_include()}/tf-tg-gha.tfstate"
+    prefix         = "${path_relative_to_include()}/tf-tg-gha.tfstate1"
     #credentials    = local.credentials
     project        = local.gcp_project  # Your GCP project ID    
   }
